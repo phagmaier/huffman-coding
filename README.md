@@ -1,4 +1,9 @@
 Never wrote huffman in c++ wanted to try it.
-I apolagize for my terrible code and for my terrible 
-merge sort just wanted to write it fast and dirty not 
-really for any reason just hadn't done it in c
+Also I know you can use a lambda function for the built 
+in sort in c++ but i decided to write my own although in 
+defaultsorting.cpp I use the sorting algo in the algorithm
+library
+
+IDK Why i'm writting this no one will read it not even me.
+If you are find a better way to spend your day
+
