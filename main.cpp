@@ -57,7 +57,8 @@ public:
   bool is_node;
 };
 
-std::vector<std::pair<char,int>> merge(std::vector<std::pair<char,int>> left, std::vector<std::pair<char,int>> right){
+
+std::vector<std::pair<char,int>> merge(std::vector<std::pair<char,int>> &left, std::vector<std::pair<char,int>> &right){
     int l =  0;
     int r = 0;
     std::vector<std::pair<char,int>> sorted;
@@ -83,28 +84,23 @@ std::vector<std::pair<char,int>> merge(std::vector<std::pair<char,int>> left, st
     return sorted;
 }
 
-std::vector<std::pair<char,int>> merge_sort(std::vector<std::pair<char,int>> &vec){
-    // Base case for empty and single element vectors
-    if (vec.size() <= 1){
-        return vec;
-    }
-    
-    // Splitting the vector into two halves
-    int mid = vec.size()/2;
-    std::vector<std::pair<char,int>> left;
-    std::vector<std::pair<char,int>> right;
 
-    // Fill left and right subarrays
-    for (int i=0; i<mid; ++i){
-        left.push_back(vec[i]);
+
+
+std::vector<std::pair<char,int>> merge_sort(std::vector<std::pair<char,int>> &vec, int start, int end) {
+    if (start == end) {
+        return {vec[start]};
     }
-    for (int i=mid; i<vec.size(); ++i){
-        right.push_back(vec[i]);
-    }
-    
+
+    // Find the middle point
+    int mid = start + (end - start) / 2;
+
     // Merge recursively
-    return merge(merge_sort(left), merge_sort(right));
+    std::vector<std::pair<char,int>> left = merge_sort(vec, start, mid);
+    std::vector<std::pair<char,int>> right =merge_sort(vec, mid + 1, end);
+    return merge(left, right);
 }
+
 
 std::vector<std::pair<char,int>> get_freq(std::string &str){
   std::unordered_map<char,int> map;
@@ -194,7 +190,7 @@ void get_huffman_codes(Node *node, std::unordered_map<char,std::string> &dic, st
 int main(){
   std::string str = "Hello world my name is parker this is a string about something random fejni3fhr";
   std::vector<std::pair<char,int>> freq = get_freq(str);
-  std::vector<std::pair<char,int>>merged = merge_sort(freq);
+  std::vector<std::pair<char,int>>merged = merge_sort(freq, 0, freq.size()-1);
   for (auto &i : merged){
     std::cout << i.first << ": " << i.second << "\n";
   }
